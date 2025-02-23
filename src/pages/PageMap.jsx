@@ -22,9 +22,7 @@ const central = new Icon({
   popupAnchor: [0, -36],
 });
 
-import { Icon } from 'leaflet'
-import fireIconUrl from '../assets/icons/fuego.png';
-import centralIconUrl from '../assets/icons/central.png';
+
 
 //import LeafIcon from "leaflet"
 //import L from 'leaflet';
@@ -97,7 +95,7 @@ const incendios = [
 ];
 
 export default function PageMap() {
-=======
+
   useEffect(() => {
     //ApiService.getCentrales().then((data)=>{setCentrales(data)
     //  console.log('datos',data)});
