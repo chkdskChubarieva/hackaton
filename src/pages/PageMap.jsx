@@ -19,16 +19,38 @@ import {Icon} from 'leaflet'
 //   }
 // });
 import fireIconUrl from '../assets/icons/fuego.png'; 
+import centralIconUrl from '../assets/icons/central.png';
 const PageMap = () => {
   
 const fuego = new Icon({
   iconUrl: fireIconUrl,
   iconSize: [36, 36],
-  iconAnchor: [22, 94],
-  popupAnchor: [-3, -76],
+  iconAnchor: [18, 36], 
+  popupAnchor: [0, -36],
+});
+
+const central = new Icon({
+  iconUrl: centralIconUrl,
+  iconSize: [36, 36],
+  iconAnchor: [18, 36], 
+  popupAnchor: [0, -36],
 });
   
   const [centrales, setCentrales] = useState([
+    {
+      lat: -17.391231,
+      lng: -66.183609,
+      id: 1,
+      icon: central,
+    },
+    {
+      lat: -17.396640,
+      lng: -66.165619,
+      id: 2,
+      icon: central,
+    },
+    ]);
+  const [incendios, setIncendios] = useState([
     {
       lat: -17.391231,
       lng: -66.183609,
@@ -41,9 +63,11 @@ const fuego = new Icon({
       id: 2,
       icon: fuego ,
     },
-    ]);
-  const [incendios, setIncendios] = useState([]);
 
+  ]);
+
+
+  
   useEffect(() => {
     //ApiService.getCentrales().then((data)=>{setCentrales(data)
      //  console.log('datos',data)});
