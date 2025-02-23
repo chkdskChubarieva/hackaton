@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import fireIconUrl from "../assets/icons/fuego.png";
@@ -27,11 +27,31 @@ const centrales = [
   { lat: -17.365719, lng: -66.137901, id: 3, nombre: "Central FVBEAR", disponibilidad: "Solo herramientas", especialidad: "Materiales peligrosos", icon: central },
 ];
 
-const incendios = [
-  { lat: -17.347396, lng: -66.144283, id: 1, intensidad: "Alta", tiempo: "30 min", coordenadas: "-17.347396, -66.144283", reporte: "Incendio forestal en expansión.", icon: fuego },
-];
-
 export default function PageMap() {
+  const [incendio, setIncendio] = useState({
+    lat: -17.347396,
+    lng: -66.144283,
+    intensidad: "Alta",
+    tiempo: "30 min",
+    coordenadas: "-17.347396, -66.144283",
+    reporte: "Incendio forestal en expansión.",
+    icon: fuego,
+  });
+
+  function MapaClickHandler() {
+    useMapEvents({
+      click(e) {
+        setIncendio({
+          ...incendio,
+          lat: e.latlng.lat,
+          lng: e.latlng.lng,
+          coordenadas: `${e.latlng.lat}, ${e.latlng.lng}`,
+        });
+      },
+    });
+    return null;
+  }
+
   return (
     <div className="flex h-screen">
       <div className="w-[250px] bg-gray-900 text-white">
@@ -40,6 +60,8 @@ export default function PageMap() {
       <div className="w-360">
         <MapContainer center={[-17.3895, -66.1568]} zoom={13} className="h-full w-full">
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <MapaClickHandler />
+          
           {centrales.map((central) => (
             <Marker key={central.id} position={[central.lat, central.lng]} icon={central.icon}>
               <Popup>
@@ -49,8 +71,8 @@ export default function PageMap() {
                   <span
                     className={
                       central.disponibilidad === "Puede atender incendio" ? "inline-block w-3 h-3 bg-green-500 rounded-full ml-2" :
-                        central.disponibilidad === "Ocupado" ? "inline-block w-3 h-3 bg-red-500 rounded-full ml-2" :
-                          "inline-block w-3 h-3 bg-yellow-500 rounded-full ml-2"
+                      central.disponibilidad === "Ocupado" ? "inline-block w-3 h-3 bg-red-500 rounded-full ml-2" :
+                      "inline-block w-3 h-3 bg-yellow-500 rounded-full ml-2"
                     }>
                   </span>
                 </p>
@@ -59,24 +81,24 @@ export default function PageMap() {
               </Popup>
             </Marker>
           ))}
-          {incendios.map((incendio) => (
-            <Marker key={incendio.id} position={[incendio.lat, incendio.lng]} icon={incendio.icon}>
-              <Popup>
-                <strong>Incendio activo</strong>
-                <p>Severidad:
-                  <span className={`font-bold ${incendio.intensidad === 'Alta' ? 'text-red-500' : incendio.intensidad === 'Media' ? 'text-yellow-500' : 'text-green-500'}`}>
-                    {incendio.intensidad}
-                  </span>
-                  <span className={`inline-block w-3 h-3 ml-2 rounded-full ${incendio.intensidad === 'Alta' ? 'bg-red-500' : incendio.intensidad === 'Media' ? 'bg-yellow-500' : 'bg-green-500'}`}></span>
-                </p>
-                <p>Tiempo transcurrido: {incendio.tiempo}</p>
-                <p>Ubicación: {incendio.coordenadas}</p>
-                <p>Reporte: {incendio.reporte}</p>
-                <button className="bg-green-500 text-white px-4 py-2 mt-2 w-full">Confirmar asistencia</button>
-              </Popup>
-            </Marker>
-          ))}
-          <RouteShortestPath centrales={centrales} incendios={incendios} />
+
+          <Marker position={[incendio.lat, incendio.lng]} icon={incendio.icon}>
+            <Popup>
+              <strong>Incendio activo</strong>
+              <p>Severidad:
+                <span className={`font-bold ${incendio.intensidad === 'Alta' ? 'text-red-500' : incendio.intensidad === 'Media' ? 'text-yellow-500' : 'text-green-500'}`}>
+                  {incendio.intensidad}
+                </span>
+                <span className={`inline-block w-3 h-3 ml-2 rounded-full ${incendio.intensidad === 'Alta' ? 'bg-red-500' : incendio.intensidad === 'Media' ? 'bg-yellow-500' : 'bg-green-500'}`}></span>
+              </p>
+              <p>Tiempo transcurrido: {incendio.tiempo}</p>
+              <p>Ubicación: {incendio.coordenadas}</p>
+              <p>Reporte: {incendio.reporte}</p>
+              <button className="bg-green-500 text-white px-4 py-2 mt-2 w-full">Confirmar asistencia</button>
+            </Popup>
+          </Marker>
+
+          <RouteShortestPath centrales={centrales} incendios={[incendio]} />
         </MapContainer>
       </div>
     </div>
