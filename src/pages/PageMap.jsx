@@ -5,6 +5,7 @@ import Sidebar from "../components/sidebar";
 import CentralMarker from "../components/centralMarker";
 import FireMarker from "../components/fireMarker";
 import ApiService from "../components/apiService";
+import RouteShortestPath from "../components/RouteShortestPath";
 //import LeafIcon from "leaflet"
 //import L from 'leaflet';
 import {Icon} from 'leaflet'
@@ -38,31 +39,33 @@ const central = new Icon({
   
   const [centrales, setCentrales] = useState([
     {
-      lat: -17.391231,
-      lng: -66.183609,
+      lat: -17.390990,
+      lng: -66.165222,
       id: 1,
       icon: central,
     },
     {
-      lat: -17.396640,
-      lng: -66.165619,
+      lat: -17.380596,
+      lng: -66.159447,
       id: 2,
+      icon: central,
+    },
+    {
+
+
+      lat: -17.365719,
+      lng: -66.137901,
+      id: 3,
       icon: central,
     },
     ]);
   const [incendios, setIncendios] = useState([
-    {
-      lat: -17.391231,
-      lng: -66.183609,
+    { 
+      lat: -17.347396,
+      lng: -66.144283,
       id: 1,
       icon: fuego,
-    },
-    {
-      lat: -17.396640,
-      lng: -66.165619,
-      id: 2,
-      icon: fuego ,
-    },
+    }
 
   ]);
 
@@ -95,6 +98,7 @@ const central = new Icon({
           {incendios.map((incendio) => (
             <FireMarker key={incendio.id} incendio={incendio} />
           ))}
+          <RouteShortestPath centrales={centrales} incendios={incendios} />
         </MapContainer>
       </div>
     </div>
