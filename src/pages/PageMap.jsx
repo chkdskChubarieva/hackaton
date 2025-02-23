@@ -6,6 +6,9 @@ import fireIconUrl from "../assets/icons/fuego.png";
 import centralIconUrl from "../assets/icons/central.png";
 import Sidebar from "../components/sidebar";
 import RouteShortestPath from "../components/RouteShortestPath";
+import emailjs from "emailjs-com";
+import verdeIconUrl from "../assets/icons/verde.png";
+import amarilloIconUrl from "../assets/icons/amarillo.png";
 
 const fuego = new Icon({
   iconUrl: fireIconUrl,
@@ -21,11 +24,65 @@ const central = new Icon({
   popupAnchor: [0, -36],
 });
 
+const verde = new Icon({
+  iconUrl: verdeIconUrl,
+  iconSize: [36, 36],
+  iconAnchor: [18, 36],
+  popupAnchor: [0, -36],
+})
+
+const amarillo = new Icon({
+  iconUrl: amarilloIconUrl,
+  iconSize: [36, 36],
+  iconAnchor: [18, 36],
+  popupAnchor: [0, -36],
+})
+
 const centrales = [
-  { lat: -17.39099, lng: -66.165222, id: 1, nombre: "Central GEOS", disponibilidad: "Puede atender incendio", especialidad: "Rescate en alturas", icon: central },
+  { lat: -17.39099, lng: -66.165222, id: 1, nombre: "Central GEOS", disponibilidad: "Puede atender incendio", especialidad: "Rescate en alturas", icon: verde },
   { lat: -17.380596, lng: -66.159447, id: 2, nombre: "Central SAR", disponibilidad: "Ocupado", especialidad: "Control de incendios", icon: central },
-  { lat: -17.365719, lng: -66.137901, id: 3, nombre: "Central FVBEAR", disponibilidad: "Solo herramientas", especialidad: "Materiales peligrosos", icon: central },
+  { lat: -17.365719, lng: -66.137901, id: 3, nombre: "Central FVBEAR", disponibilidad: "Solo herramientas", especialidad: "Materiales peligrosos", icon: amarillo },
 ];
+
+// Función para enviar correo
+const sendEmail = (incendioData) => {
+  const templateParams = {
+    to_name: "Destinatario",
+    message: `🔥 Se ha detectado un incendio en: ${incendioData.coordenadas}.\n\nReporte: ${incendioData.reporte}\nIntensidad: ${incendioData.intensidad}\nTiempo: ${incendioData.tiempo}`,
+    to_email: "christian.chubarieva@gmail.com",
+  };
+
+  emailjs
+    .send("service_8vhr1bk", "template_oqzlxne", templateParams, "keWcQ30g5MKvw1Nxo")
+    .then((response) => {
+      console.log("Correo enviado:", response);
+    })
+    .catch((error) => {
+      console.error("Error al enviar el correo:", error);
+    });
+};
+
+// Componente para manejar clics en el mapa
+const MapaClickHandler = ({ setIncendio }) => {
+  useMapEvents({
+    click(e) {
+      const newIncendio = {
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+        coordenadas: `${e.latlng.lat}, ${e.latlng.lng}`,
+        intensidad: "Alta",
+        tiempo: "3 min",
+        reporte: "Nuevo incendio detectado.",
+        icon: fuego,
+      };
+
+      setIncendio(newIncendio); // Actualiza el estado del incendio
+      sendEmail(newIncendio); // Envía el correo
+    },
+  });
+
+  return null;
+};
 
 export default function PageMap() {
   const [incendio, setIncendio] = useState({
@@ -38,20 +95,6 @@ export default function PageMap() {
     icon: fuego,
   });
 
-  function MapaClickHandler() {
-    useMapEvents({
-      click(e) {
-        setIncendio({
-          ...incendio,
-          lat: e.latlng.lat,
-          lng: e.latlng.lng,
-          coordenadas: `${e.latlng.lat}, ${e.latlng.lng}`,
-        });
-      },
-    });
-    return null;
-  }
-
   return (
     <div className="flex h-screen">
       <div className="w-[250px] bg-gray-900 text-white">
@@ -60,7 +103,7 @@ export default function PageMap() {
       <div className="w-360">
         <MapContainer center={[-17.3895, -66.1568]} zoom={13} className="h-full w-full">
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <MapaClickHandler />
+          <MapaClickHandler setIncendio={setIncendio} />
 
           {centrales.map((central) => (
             <Marker key={central.id} position={[central.lat, central.lng]} icon={central.icon}>
