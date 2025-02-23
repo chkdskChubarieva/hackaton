@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-routing-machine";
+import CustomFormatter from "./CustomFormatter";
 
 const RouteShortestPath = ({ centrales, incendios }) => {
   const map = useMap();
@@ -38,6 +39,8 @@ const RouteShortestPath = ({ centrales, incendios }) => {
         ],
         routeWhileDragging: true,
         createMarker: () => null, // No crear marcadores adicionales
+        formatter: new CustomFormatter(), // Usar el formateador personalizado
+        showAlternatives: false, // No mostrar rutas alternativas
       }).addTo(map);
     });
 

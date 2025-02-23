@@ -6,9 +6,12 @@ import CentralMarker from "../components/centralMarker";
 import FireMarker from "../components/fireMarker";
 import ApiService from "../components/apiService";
 import RouteShortestPath from "../components/RouteShortestPath";
+import { Icon } from 'leaflet'
+import fireIconUrl from '../assets/icons/fuego.png';
+import centralIconUrl from '../assets/icons/central.png';
+
 //import LeafIcon from "leaflet"
 //import L from 'leaflet';
-import {Icon} from 'leaflet'
 // const LeafIcon = L.Icon.extend({
 //   options: {
 //       shadowUrl: 'leaf-shadow.png',
@@ -19,24 +22,22 @@ import {Icon} from 'leaflet'
 //       popupAnchor:  [-3, -76]
 //   }
 // });
-import fireIconUrl from '../assets/icons/fuego.png'; 
-import centralIconUrl from '../assets/icons/central.png';
-const PageMap = () => {
-  
-const fuego = new Icon({
-  iconUrl: fireIconUrl,
-  iconSize: [36, 36],
-  iconAnchor: [18, 36], 
-  popupAnchor: [0, -36],
-});
 
-const central = new Icon({
-  iconUrl: centralIconUrl,
-  iconSize: [36, 36],
-  iconAnchor: [18, 36], 
-  popupAnchor: [0, -36],
-});
-  
+const PageMap = () => {
+  const fuego = new Icon({
+    iconUrl: fireIconUrl,
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+    popupAnchor: [0, -36],
+  });
+
+  const central = new Icon({
+    iconUrl: centralIconUrl,
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+    popupAnchor: [0, -36],
+  });
+
   const [centrales, setCentrales] = useState([
     {
       lat: -17.390990,
@@ -58,9 +59,9 @@ const central = new Icon({
       id: 3,
       icon: central,
     },
-    ]);
+  ]);
   const [incendios, setIncendios] = useState([
-    { 
+    {
       lat: -17.347396,
       lng: -66.144283,
       id: 1,
@@ -69,11 +70,9 @@ const central = new Icon({
 
   ]);
 
-
-  
   useEffect(() => {
     //ApiService.getCentrales().then((data)=>{setCentrales(data)
-     //  console.log('datos',data)});
+    //  console.log('datos',data)});
     //ApiService.getIncendios().then(setIncendios);
   }, []);
 
