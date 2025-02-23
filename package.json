@@ -10,14 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@tailwindcss/vite": "^4.0.8",
     "axios": "^1.7.9",
-    "emailjs-com": "^3.2.0",
     "firebase": "^11.3.1",
     "leaflet": "^1.9.4",
-    "leaflet-routing-machine": "^3.2.12",
-    "proyecto_forestal": "file:",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-leaflet": "^5.0.0",

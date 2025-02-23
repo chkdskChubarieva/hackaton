@@ -96,11 +96,11 @@ export default function PageMap() {
   });
 
   return (
-    <div className="flex h-screen">
-      <div className="w-[250px] bg-gray-900 text-white">
+    <div className="flex w-full h-dvh relative">
+      <div>
         <Sidebar />
       </div>
-      <div className="w-360">
+      <div className="w-360 z-10">
         <MapContainer center={[-17.3895, -66.1568]} zoom={13} className="h-full w-full">
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <MapaClickHandler setIncendio={setIncendio} />
