@@ -9,6 +9,7 @@ import RouteShortestPath from "../components/RouteShortestPath";
 import emailjs from "emailjs-com";
 import verdeIconUrl from "../assets/icons/verde.png";
 import amarilloIconUrl from "../assets/icons/amarillo.png";
+import "../components/modal.css"
 
 const fuego = new Icon({
   iconUrl: fireIconUrl,
@@ -78,6 +79,7 @@ const MapaClickHandler = ({ setIncendio }) => {
 
       setIncendio(newIncendio); // Actualiza el estado del incendio
       sendEmail(newIncendio); // Envía el correo
+      alert("🔥 ¡Alerta de incendio!");
     },
   });
 

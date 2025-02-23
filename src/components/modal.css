@@ -1,0 +1,12 @@
+.leaflet-routing-alternatives-container {
+  width: 280px;
+  font-size: 20px;
+  background-color: #000000c4;
+  border-radius: 1rem;
+  padding: 12px;
+  margin: none;
+}
+
+.leaflet-routing-alt-minimized  {
+  display: none;
+}

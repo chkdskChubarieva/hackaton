@@ -11,7 +11,7 @@ class CustomFormatter extends L.Routing.Formatter {
     }
 
     formatTime(t) {
-        return "3.5Km" + super.formatTime(t);
+        return "3.5Km, " + super.formatTime(t);
     }
 }
 
