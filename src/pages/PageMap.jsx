@@ -61,7 +61,7 @@ export default function PageMap() {
         <MapContainer center={[-17.3895, -66.1568]} zoom={13} className="h-full w-full">
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <MapaClickHandler />
-          
+
           {centrales.map((central) => (
             <Marker key={central.id} position={[central.lat, central.lng]} icon={central.icon}>
               <Popup>
@@ -71,8 +71,8 @@ export default function PageMap() {
                   <span
                     className={
                       central.disponibilidad === "Puede atender incendio" ? "inline-block w-3 h-3 bg-green-500 rounded-full ml-2" :
-                      central.disponibilidad === "Ocupado" ? "inline-block w-3 h-3 bg-red-500 rounded-full ml-2" :
-                      "inline-block w-3 h-3 bg-yellow-500 rounded-full ml-2"
+                        central.disponibilidad === "Ocupado" ? "inline-block w-3 h-3 bg-red-500 rounded-full ml-2" :
+                          "inline-block w-3 h-3 bg-yellow-500 rounded-full ml-2"
                     }>
                   </span>
                 </p>
