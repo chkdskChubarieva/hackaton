@@ -7,11 +7,11 @@ class CustomFormatter extends L.Routing.Formatter {
     }
 
     formatDistance(d) {
-        return '';
+        return "";
     }
 
     formatTime(t) {
-        return super.formatTime(t);
+        return "3.5Km" + super.formatTime(t);
     }
 }
 
