@@ -18,10 +18,12 @@ import {Icon} from 'leaflet'
 //       popupAnchor:  [-3, -76]
 //   }
 // });
+import fireIconUrl from '../assets/icons/fuego.png'; 
 const PageMap = () => {
-const cuaderno = new Icon({
-  iconUrl: '/assets/img/fuego.png',
-  iconSize: [120, 120],
+  
+const fuego = new Icon({
+  iconUrl: fireIconUrl,
+  iconSize: [36, 36],
   iconAnchor: [22, 94],
   popupAnchor: [-3, -76],
 });
@@ -31,13 +33,13 @@ const cuaderno = new Icon({
       lat: -17.391231,
       lng: -66.183609,
       id: 1,
-      icon: cuaderno,
+      icon: fuego,
     },
     {
       lat: -17.396640,
       lng: -66.165619,
       id: 2,
-      icon: cuaderno,
+      icon: fuego ,
     },
     ]);
   const [incendios, setIncendios] = useState([]);
